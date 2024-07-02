@@ -21,52 +21,20 @@ process.stdin.on("end", function (): void {
   main();
 });
 
-function readLine(): string {
-  return inputLines[currentLine++] || "";
-}
-
+/*
+ * Complete the 'bodyTemperature' function below.
+ *
+ * The function is expected to return an INTEGER_ARRAY.
+ * The function accepts following parameters:
+ *  1. STRING doctorName
+ *  2. INTEGER diagnosisId
+ * API URL: https://jsonmock.hackerrank.com/api/medical_records?page={page_no}
+ */
 async function bodyTemperature(
   doctorName: string,
   diagnosisId: number
 ): Promise<number[]> {
-  let page = 1;
-  let temperatures: number[] = [];
-
-  while (true) {
-    console.log(`Fetching page ${page}...`); // Debugging line
-    const response = await axios.get(
-      `https://jsonmock.hackerrank.com/api/medical_records?page=${page}`
-    );
-    const data = response.data;
-
-    if (!data.data || data.data.length === 0) break;
-
-    // console.log(`Fetched data from page ${page}:`, data.data); // Debugging line
-
-    data.data.forEach((record: any) => {
-      if (
-        record.doctor.name === doctorName &&
-        record.diagnosis.id === diagnosisId
-      ) {
-        console.log(`Matching record found:`, record); // Debugging line
-        temperatures.push(record.vitals.bodyTemperature);
-      }
-    });
-
-    if (page >= data.total_pages) break;
-    page++;
-  }
-
-  console.log(`Collected temperatures: ${temperatures}`); // Debugging line
-
-  if (temperatures.length === 0) {
-    return [0, 0]; // No matching records
-  }
-
-  const minTemp = Math.min(...temperatures);
-  const maxTemp = Math.max(...temperatures);
-
-  return [minTemp, maxTemp];
+  // Write your code here
 }
 
 async function main() {
@@ -75,9 +43,6 @@ async function main() {
 
   const doctorName: string = "Dr Arnold Bullock";
   const diagnosisId: number = 2;
-
-  console.log(`Doctor Name: ${doctorName}`); // Debugging line
-  console.log(`Diagnosis ID: ${diagnosisId}`); // Debugging line
 
   try {
     const result: number[] = await bodyTemperature(doctorName, diagnosisId);
